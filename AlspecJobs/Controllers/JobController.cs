@@ -2,7 +2,6 @@
 namespace AlspecBackend.Controllers
 {
     using AlspecBackend.DTO;
-    using AlspecBackend.Entities;
     using AlspecBackend.Projections;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;

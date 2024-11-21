@@ -7,7 +7,6 @@ namespace AlspecBackend.Entities
     public enum Status
     {
         Pending = 0,
-        [EnumMember(Value = "In Progress")]
         InProgress = 1,
         Completed = 2,
     }

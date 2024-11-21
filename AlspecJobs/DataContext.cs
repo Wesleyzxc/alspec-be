@@ -42,6 +42,49 @@ namespace AlspecBackend
                 v => v.ToString(),
                 v => (Status)Enum.Parse(typeof(Status), v)
             );
+
+            modelBuilder.Entity<Job>().HasData(
+                new Job
+                {
+                    Id = "job-1",
+                    Title = "Job 1 Title",
+                    Description = "Description for Job 1",
+                },
+                new Job
+                {
+                    Id = "job-2",
+                    Title = "Job 2 Title",
+                    Description = "Description for Job 2",
+                }
+            );
+
+            modelBuilder.Entity<SubItem>().HasData(
+                new SubItem
+                {
+                    ItemId = "item-1",
+                    JobId = "job-1",
+                    Title = "SubItem 1",
+                    Description = "In progress sub item",
+                    Status = Status.InProgress
+                },
+                new SubItem
+                {
+                    ItemId = "item-2",
+                    JobId = "job-1",
+                    Title = "SubItem 2",
+                    Description = "Pending sub item",
+                    Status = Status.Pending
+                },
+                new SubItem
+                {
+                    ItemId = "item-3",
+                    JobId = "job-2",
+                    Title = "SubItem 3",
+                    Description = "Completed SubItem",
+                    Status = Status.Completed
+                }
+            );
+
         }
     }
 }
