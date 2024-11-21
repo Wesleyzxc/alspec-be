@@ -1,6 +1,9 @@
 namespace AlspecBackend.Api
 {
     using System.Text.Json.Serialization;
+    using AlspecBackend.Entities;
+    using AlspecBackend.Repository;
+    using AlspecBackend.Repository.JobDao;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -38,6 +41,7 @@ namespace AlspecBackend.Api
                 });
             ;
             services.AddDbContext<DataContext>();
+            services.AddScoped<IRepository<Job>, JobRepository>();
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();

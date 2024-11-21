@@ -12,18 +12,20 @@ namespace AlspecBackend.Repository.JobDao
         public JobRepository(DataContext context)
         {
             _context = context;
-            _dbSet = _context.Set<Job>();
+            _dbSet = _context.Jobs;
         }
 
-        public async Task<Job?> GetByIdAsync(string id)
+        public async Task<Job[]> GetAll()
         {
-            return await _dbSet.FindAsync(id);
+            var jobs = await _dbSet.Include(j => j.SubItems).ToListAsync();
+            return [.. jobs];
         }
 
 
         public async Task AddAsync(Job entity)
         {
-            await _dbSet.AddAsync(entity);
+            _dbSet.Add(entity);
+            await SaveAsync();
         }
 
         public async Task SaveAsync()

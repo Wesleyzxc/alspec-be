@@ -2,7 +2,7 @@ namespace AlspecBackend.Repository
 {
     public interface IRepository<T> where T : class
     {
-        Task<T?> GetByIdAsync(string id);
+        Task<T[]> GetAll();
         Task AddAsync(T entity);
         Task SaveAsync();
     }

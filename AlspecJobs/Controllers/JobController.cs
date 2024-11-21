@@ -2,9 +2,10 @@
 namespace AlspecBackend.Controllers
 {
     using AlspecBackend.DTO;
+    using AlspecBackend.Entities;
     using AlspecBackend.Projections;
+    using AlspecBackend.Repository;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
     [ApiController]
     [Produces("application/json")]
@@ -13,11 +14,13 @@ namespace AlspecBackend.Controllers
     {
         private readonly DataContext context;
         private readonly ILogger<JobController> logger;
+        private readonly IRepository<Job> jobRepository;
 
-        public JobController(DataContext context, ILogger<JobController> logger)
+        public JobController(DataContext context, ILogger<JobController> logger, IRepository<Job> jobRepository)
         {
             this.context = context;
             this.logger = logger;
+            this.jobRepository = jobRepository;
         }
 
         [HttpPost]
@@ -25,9 +28,14 @@ namespace AlspecBackend.Controllers
         {
             try
             {
+                if (job.SubItems.Any(s => s.JobId != job.Id))
+                {
+                    return BadRequest("A SubItem does not belong to the current job.");
+                }
+
                 var entity = job.ToEntity();
-                context.Add(entity);
-                await context.SaveChangesAsync();
+
+                await jobRepository.AddAsync(entity);
 
                 return Ok(job);
             }
@@ -46,7 +54,8 @@ namespace AlspecBackend.Controllers
             logger.LogInformation("Getting all jobs");
             try
             {
-                var jobs = context.Jobs.Include(j => j.SubItems).Select(j => j.ToDto()).ToList();
+                var jobEntities = await jobRepository.GetAll();
+                var jobs = jobEntities.Select(j => j.ToDto()).ToList();
 
                 return Ok(jobs);
             }
