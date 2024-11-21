@@ -1,0 +1,6 @@
+@AlspecJobs_HostAddress = http://localhost:5079
+
+GET {{AlspecJobs_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
