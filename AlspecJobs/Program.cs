@@ -40,5 +40,11 @@ namespace AlspecBackend.Api
                 .UseConfiguration(configuration)
                 .UseStartup<Startup>()
                 .Build();
+
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            Console.WriteLine("Doing Entity Framework migrations stuff...");
+            return Host.CreateDefaultBuilder();
+        }
     }
 }

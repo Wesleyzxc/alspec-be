@@ -5,7 +5,6 @@ namespace AlspecBackend.Api
     using AlspecBackend.Repository;
     using AlspecBackend.Repository.JobDao;
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Cors.Infrastructure;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +29,6 @@ namespace AlspecBackend.Api
         {
             var corsOrigins = Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
 
-            Console.WriteLine(corsOrigins[0]);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigins", policy =>
